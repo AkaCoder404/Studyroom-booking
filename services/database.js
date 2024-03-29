@@ -5,14 +5,14 @@ const mysql = require('mysql2/promise');
 const dotenv = require('dotenv');
 dotenv.config();
 
-console.log(dotenv.config().parsed.DB_HOST);
+console.log(dotenv.config().parsed.MYSQL_HOST);
 
 // Connect to the database
 const pool = mysql.createPool({
-    host: dotenv.config().parsed.DB_HOST,
-    user: dotenv.config().parsed.DB_USERNAME,
-    password: dotenv.config().parsed.DB_PASSWORD,
-    database: dotenv.config().parsed.DB_DATABASE,
+    host: dotenv.config().parsed.MYSQL_HOST,
+    user: dotenv.config().parsed.MYSQL_ROOT_USER,
+    password: dotenv.config().parsed.MYSQL_ROOT_PASSWORD,
+    database: dotenv.config().parsed.MYSQL_DATABASE,
     waitForConnections: true,
     connectionLimit: 10,
     queueLimit: 0

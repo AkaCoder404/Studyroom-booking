@@ -1,0 +1,22 @@
+version: "3.1"
+
+services:
+  db:
+    image: mysql:latest
+    container_name: mysql
+    restart: always
+    env_file:
+      - path: .env
+        required: true
+    environment:
+      MYSQL_DATABASE: ${MYSQL_DATABASE}
+      MYSQL_ROOT_USER: ${MYSQL_ROOT_USER}
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+      MYSQL_ROOT_HOST: ${MYSQL_DOCKER_HOST}
+    ports:
+      - "3306:3306"
+#     volumes:
+#       - dbdata:/var/lib/mysql
+
+# volumes:
+#   dbdata:

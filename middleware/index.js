@@ -33,3 +33,12 @@ module.exports = {
     checkAdmin,
     errorHandler
 }
+
+// TODO - Other middleware functions
+// Set Cors and Cache headers
+// Route Guards
+// Rate Limiting
+// Body Parser
+// Cookie Parser
+// Security - helmet, xss, etc
+// Compression - compression

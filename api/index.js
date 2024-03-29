@@ -18,9 +18,14 @@ app.use('/api/bookings', bookingRoutes);
 // Add the errorHandler middleware
 app.use(errorLog);
 
-// Default routes
+// Default Route
+app.get('/', (req, res) => {
+    res.send('Welcome to Study Room Booking backend! Go to api/ for the API');
+});
+
+// API Routes
 app.get('/api/', (req, res) => {
-    res.send('Welcome to Study Room Booking backend!');
+    res.send('Welcome to the API! Here is a list of available routes: /users, /bookings');
 });
 
 
