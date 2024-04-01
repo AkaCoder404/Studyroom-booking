@@ -19,6 +19,7 @@ Use `nvm use` to set the node version.
 
 ## Running
 First have to install and create the MySQL database. The schema is defined in `/database/schema.sql`. Define the MySQL host, password and database set in a `.env` file.
+
 ```sh
 MYSQL_HOST = "<HOST>"
 MYSQL_DOCKER_HOST = "%"
@@ -29,11 +30,15 @@ MYSQL_DATABASE = "study_room_booking"
 JWT_SECRET = "<TOKEN">
 ```
 
-In order to create a container running MySQL, simply run `docker compose -f docker-compose.yml up -d`, use a database GUI like MySQL Workbench to connect to the MySQL database and create the tables there. Issues regarding this can be found here https://github.com/docker-library/mysql/issues/275.
+In order to create a container running MySQL, simply run `docker compose -f docker-compose.yml up -d`, use a database GUI like MySQL Workbench to connect to the MySQL database and create the tables there. More details can be found in about MySQL database setup ![here](./docs/01_SQL.md)
+
+> Make sure you are using docker compose v2.
 
 You can use `openssl` to create a JWT token, for example run `openssl rand -base64 32` to generate a JWT token. This is used for authentication with access token.
 
 Then run the application using `npm run dev`. Here we used nodemon for live referesh of app.
+
+
 
 ## API Documentation
 
