@@ -6,13 +6,13 @@ dotenv.config();
 // Import Models
 const UserModel = require('../models/userModel');
 
-
 const getUsers = async () => {
     // Get all users
     const users = await UserModel.findAll();
     return users;
 };
 
+// Service to login a user
 const login = async (username, password) => {
     // Validate user credentials and return a token
     const user = await getUserByUsername(username);
@@ -35,25 +35,30 @@ const login = async (username, password) => {
     return token;
 };
 
+// Service to get a user by username
 const getUserByUsername = async (username) => {
     const user = await UserModel.findByUsername(username);
     return user;
 };
 
+// Service to get a user by ID
+const getUserById = async (userId) => {
+    const user = await UserModel.findById(userId);
+    return user;
+}
 
-const authenticateUser = async (token) => {
-    // Verify token against user credentials
+// Service to verify a user's token
+const authenticateUser = (token) => {
     if (!token) {
         throw new Error('Token not provided');
     }
 
-    jwt.verify(token, dotenv.config().parsed.JWT_SECRET, (err, decoded) => {
-        if (err) {
-            throw new Error('Invalid token');
-        }
-        console.log(decoded);
-        return decoded.user_id;
-    });
+
+    const decoded = jwt.verify(token, dotenv.config().parsed.JWT_SECRET);
+    if (!decoded) {
+        throw new Error('Invalid token');
+    }
+    return decoded.userId;
 };
 
 
@@ -64,10 +69,6 @@ const registerUser = async (userData) => {
 
 const updateUserProfile = async (userId, newProfileData) => {
     // Update user profile information
-};
-
-const getUserById = async (userId) => {
-    // Fetch a single user by ID
 };
 
 const deleteUser = async (userId) => {

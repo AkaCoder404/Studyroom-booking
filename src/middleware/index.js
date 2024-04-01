@@ -13,13 +13,14 @@ function errorLog(err, req, res, next) {
     res.status(500).send({ status: "server-error", message: err.message });
 }
 
-
-// TODO Check if user is admin with tokens
-function checkAdmin(req, res, next) {
-    if (req.user.role !== 'admin') {
-        return res.status(401).send({ error: 'Unauthorized' });
+// TODO 用户权限检查
+function verifyRoles(req, res, next) {
+    const { roles } = req.user;
+    if (roles.includes('admin')) {
+        next();
+    } else {
+        res.status(403).send({ status: "forbidden", message: "You do not have the required permissions" });
     }
-    next(); // Move to the next middleware or route handler
 }
 
 function errorHandler(err, req, res, next) {
@@ -30,7 +31,7 @@ function errorHandler(err, req, res, next) {
 module.exports = {
     accessLog,
     errorLog,
-    checkAdmin,
+    verifyRoles,
     errorHandler
 }
 

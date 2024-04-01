@@ -10,8 +10,8 @@ const express = require('express');
 const router = express.Router();
 const { getSeats, getRooms } = require('../services/bookingService.js');
 
-// Get all the available rooms
-router.get('/', async (req, res) => {
+// 获取所有房间
+router.get('/rooms', async (req, res) => {
     try {
         const rooms = await getRooms();
         res.send(rooms);
@@ -20,10 +20,11 @@ router.get('/', async (req, res) => {
     }
 });
 
-// Get all available seats for a room
-router.get('/:id', async (req, res) => {
+// 获取房间的所有座位
+router.get('/rooms/:roomId/seats', async (req, res) => {
     try {
-        const seats = await getSeats(req.params.id);
+        const roomId = req.params.roomId;
+        const seats = await getSeats(roomId);
         res.send(seats);
     } catch (error) {
         console.log(error);
