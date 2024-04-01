@@ -30,7 +30,7 @@ MYSQL_DATABASE = "study_room_booking"
 JWT_SECRET = "<TOKEN">
 ```
 
-In order to create a container running MySQL, simply run `docker compose -f docker-compose.yml up -d`, use a database GUI like MySQL Workbench to connect to the MySQL database and create the tables there. More details can be found in about MySQL database setup ![here](./docs/01_SQL.md)
+In order to create a container running MySQL, simply run `docker compose -f docker-compose.yml up -d`, use a database GUI like MySQL Workbench to connect to the MySQL database and create the tables there. More details can be found in about MySQL database setup [here](./docs/01_SQL.md)
 
 > Make sure you are using docker compose v2.
 
@@ -43,18 +43,27 @@ Then run the application using `npm run dev`. Here we used nodemon for live refe
 ## API Documentation
 
 ### User
-#### Login
+#### 登记
 ```
 api/users/login
 ```
-Login with a username and password and get back a token that will be stored in cookies.
-#### Create User
+通过username和password登记。Headers中获取authToken.
+
+#### 用户信息
 ```
-api/users/createuser
+api/users/profile
 ```
-Managers can create new users.
+通过authToken获取用户信息。
+
 
 ### Booking
+#### 房间列表
 ```
-api/
+api/bookings/rooms
+```
+通过authToken获取房间信息。
+
+#### 房间位置列表
+```
+api/bookings/roms
 ```

@@ -25,7 +25,6 @@ router.post('/login', async (req, res) => {
         });
 
         res.status(200).send({
-            // "token": token,
             "message": "Successfully logged in"
         });
     }
@@ -36,12 +35,16 @@ router.post('/login', async (req, res) => {
 
 // 获取用户信息
 router.get('/profile', async (req, res) => {
-    // Authenticate user
-    const token = req.cookies.authToken;
-    const userId = await authenticateUser(token);
-    // Get user profile
-    const user = await getUserById(userId);
-    res.send(user);
+    try {
+        // Authenticate user
+        const token = req.cookies.authToken;
+        const userId = await authenticateUser(token);
+        // Get user profile
+        const user = await getUserById(userId);
+        res.send(user);
+    } catch (error) {
+        res.status(401).send({ error: error.message });
+    }
 });
 
 // TODO Seperate user services and booking services
