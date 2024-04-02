@@ -7,7 +7,7 @@ dotenv.config();
 const UserModel = require('../models/userModel');
 
 const getUsers = async () => {
-    // Get all users
+    // Get all users from the database
     const users = await UserModel.findAll();
     return users;
 };
@@ -30,10 +30,20 @@ const login = async (username, password) => {
     }
 
     // Generate a token for the user
-    const token = jwt.sign({ userId: user.user_id }, dotenv.config().parsed.JWT_SECRET, { expiresIn: '1h' });
-
+    const token = generateToken(user.user_id, user.role);
     return token;
 };
+
+// Service to generate a token
+const generateToken = (userId, userRole) => {
+    const token = jwt.sign({ userId, userRole }, dotenv.config().parsed.JWT_SECRET, { expiresIn: '1h' });
+    return token;
+};
+
+// Service to check if user is an admin
+const isAdmin = (user) => {
+    return user.role === 'admin';
+}
 
 // Service to get a user by username
 const getUserByUsername = async (username) => {
@@ -52,7 +62,6 @@ const authenticateUser = (token) => {
     if (!token) {
         throw new Error('Token not provided');
     }
-
 
     const decoded = jwt.verify(token, dotenv.config().parsed.JWT_SECRET);
     if (!decoded) {
@@ -80,6 +89,7 @@ module.exports = {
     login,
     registerUser,
     authenticateUser,
+    isAdmin,
     updateUserProfile,
     getUserById,
     deleteUser,

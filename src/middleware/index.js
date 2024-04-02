@@ -1,3 +1,6 @@
+const jwt = require('jsonwebtoken');
+const dotenv = require('dotenv');
+dotenv.config();
 
 // Loggers
 function accessLog(req, res, next) {
@@ -15,23 +18,27 @@ function errorLog(err, req, res, next) {
 
 // 用户认证
 function authenticateUser(req, res, next) {
-    // Get the token from the Authorization header
-    const authHeader = req.headers.authorization;
-    const token = authHeader && authHeader.split(' ')[1];
+    // Exclude base routes from authentication
+    if (req.path === '/' || req.path === '/api' || req.path === '/api/users/login') {
+        return next();
+    }
+
+    // Get the token from the request
+    const token = req.cookies.authToken;
     if (!token) {
         return res.status(401).send({ status: "unauthorized", message: "Unauthorized access" });
     }
 
-    // Verify the token
-    jwt.verify(token, process.env.JWT_SECRET, (err, user) => {
-        if (err) {
-            return res.status(403).send({ status: "forbidden", message: "Invalid token" });
-        }
-        req.user = user;
-        next();
-    });
+    try {
+        // Verify the token
+        const decoded = jwt.verify(token, dotenv.config().parsed.JWT_SECRET);
+        req.user = decoded; // Optionally attach user info to the request
+        next(); // Token is valid, proceed to the next middleware or route handler
+    } catch (error) {
+        // Token verification failed
+        return res.status(403).send({ status: "forbidden", message: "Invalid token" });
+    }
 }
-
 
 // TODO 用户权限检查
 function verifyRoles(req, res, next) {
@@ -43,16 +50,32 @@ function verifyRoles(req, res, next) {
     }
 }
 
+// 
 function errorHandler(err, req, res, next) {
     console.error(err.stack);
     res.status(500).send('Something broke!');
 }
 
+// 
+function rateLimiter(req, res, next) {
+    // Implement rate limiting
+}
+
+//
+function compression(req, res, next) {
+    // Implement compression
+}
+
+//
+
 module.exports = {
     accessLog,
     errorLog,
+    errorHandler,
     verifyRoles,
-    errorHandler
+    authenticateUser,
+    rateLimiter,
+    compression
 }
 
 // TODO - Other middleware functions

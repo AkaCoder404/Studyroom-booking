@@ -3,16 +3,35 @@ This is a very simple backend project using baremetal node.js and express to bui
 
 ## Features
 ### Core Features
-- Authentication with JWT token
-- Authourization with Access Tokens
+- Authentication with JWT token & Middleware
+- Authorization with custom checks
 - Access Log and Error Log with Middleware
-- Interacts with MySQL Database
+- MySQL Database Model Interface
+- TODO: Generate QR Codes for Sign In
+- TODO: Send email for confirmation
 
 ### App Features
+#### All Users
 - Users can login and log out
+- Users can view basic personal information
+
+#### Students
 - Students can see availble rooms/seats for their specific department
 - Students can book an available seats
+- Students can see their booking history / status (booked, cancelled, completed, noshow)
+- Students can cancel their booking
+- TODO. Students can rebook based on past history
+- TODO. Students can check into the room
+- TODO. Students get a confirmation email
+
+#### Administrator
+- TODO. Administrator can add or remove users
+- TODO. Administrator can create or remove rooms/seats
+- TODO. Administrator can get some analytics about rooms
 - Administrator can approve or reject a booking made by students
+
+#### Others
+- TODO: User's get a "noshow" status if not checked in on time.
 
 ## Setup
 Use `nvm use` to set the node version.
@@ -41,29 +60,5 @@ Then run the application using `npm run dev`. Here we used nodemon for live refe
 
 
 ## API Documentation
+Refer to this [document](./docs/02.API.md)
 
-### User
-#### 登记
-```
-api/users/login
-```
-通过username和password登记。Headers中获取authToken.
-
-#### 用户信息
-```
-api/users/profile
-```
-通过authToken获取用户信息。
-
-
-### Booking
-#### 房间列表
-```
-api/bookings/rooms
-```
-通过authToken获取房间信息。
-
-#### 房间位置列表
-```
-api/bookings/roms
-```

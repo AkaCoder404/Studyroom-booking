@@ -5,7 +5,7 @@ const mysql = require('mysql2/promise');
 const dotenv = require('dotenv');
 dotenv.config();
 
-console.log(dotenv.config().parsed.MYSQL_HOST);
+console.log(`MySQL is running at ${dotenv.config().parsed.MYSQL_HOST}`);
 
 // Connect to the database
 const pool = mysql.createPool({

@@ -1,11 +1,19 @@
 const express = require('express');
 const router = express.Router();
-const { getUsers, login, authenticateUser, getUserById } = require('../services/userService');
+const { getUsers, login, authenticateUser, getUserById, isAdmin } = require('../services/userService');
 
-// 获取所有用户
+// 获取所有用户, 只能管理员访问
 router.get('/', async (req, res) => {
-    users = await getUsers();
-    res.send(users);
+    try {
+        // Authorize user
+        if (!isAdmin(req)) {
+            throw new Error('Unauthorized');
+        }
+        users = await getUsers();
+        res.send(users);
+    } catch (error) {
+        res.status(401).send({ error: error.message });
+    }
 });
 
 // 登入
@@ -33,18 +41,27 @@ router.post('/login', async (req, res) => {
     }
 });
 
+// 登出
+router.get('/logout', async (req, res) => {
+    res.clearCookie('authToken');
+    res.status(200).send({ "message": "Successfully logged out" });
+});
+
 // 获取用户信息
 router.get('/profile', async (req, res) => {
     try {
-        // Authenticate user
-        const token = req.cookies.authToken;
-        const userId = await authenticateUser(token);
-        // Get user profile
+        const userId = req.user.userId;
         const user = await getUserById(userId);
         res.send(user);
     } catch (error) {
         res.status(401).send({ error: error.message });
     }
+});
+
+// TODO User can checkin to a room with QR code
+router.post('/qr', async (req, res) => {
+    const err = new Error('Feature not implemented yet');
+    next(err);
 });
 
 // TODO Seperate user services and booking services
