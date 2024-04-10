@@ -1,6 +1,6 @@
 
 // Import Models
-const BookingModel = require('../models/bookingModel');
+const BookingModel = require('../models/bookings.model.js');
 
 
 // Service to get all rooms
@@ -64,7 +64,7 @@ const getBookingsByRoomId = async (roomId, date) => {
         return {
             seat_id: seat.seat_id,
             room_id: seat.room_id,
-            seat_has_outlet: seat.seat_has_outlet_id,
+            seat_has_outlet: seat.seat_has_outlet,
             bookings: seatBookings
         }
     });

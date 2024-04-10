@@ -1,4 +1,4 @@
-const db = require('../services/database');
+const db = require('../database');
 
 // 用户模型
 class UserModel {

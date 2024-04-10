@@ -1,6 +1,9 @@
 # Study Room Book Backend
 This is a very simple backend project using baremetal node.js and express to build an API for a study room seat booking service. It uses MySQL to connect to the database. Here we use the 3-layer architecture approach for a scalable project.
 
+## Architecture
+
+
 ## Features
 ### Core Features
 - Authentication with JWT token & Middleware
@@ -40,6 +43,8 @@ Use `nvm use` to set the node version.
 First have to install and create the MySQL database. The schema is defined in `/database/schema.sql`. Define the MySQL host, password and database set in a `.env` file.
 
 ```sh
+PORT = "<PORT OF Express Server"
+
 MYSQL_HOST = "<HOST>"
 MYSQL_DOCKER_HOST = "%"
 MYSQL_ROOT_USER = "<USERNAME>"
@@ -49,7 +54,7 @@ MYSQL_DATABASE = "study_room_booking"
 JWT_SECRET = "<TOKEN">
 ```
 
-In order to create a container running MySQL, simply run `docker compose -f docker-compose.yml up -d`, use a database GUI like MySQL Workbench to connect to the MySQL database and create the tables there. More details can be found in about MySQL database setup [here](./docs/01_SQL.md)
+In order to create a container running MySQL, simply run `docker compose up -d`, use a database GUI like MySQL Workbench to connect to the MySQL database and create the tables there. More details can be found in about MySQL database setup [here](./docs/01_SQL.md)
 
 > Make sure you are using docker compose v2.
 
@@ -57,8 +62,8 @@ You can use `openssl` to create a JWT token, for example run `openssl rand -base
 
 Then run the application using `npm run dev`. Here we used nodemon for live referesh of app.
 
-
-
 ## API Documentation
 Refer to this [document](./docs/02.API.md)
+
+
 

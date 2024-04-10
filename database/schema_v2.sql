@@ -1,5 +1,5 @@
 -- Create database
-CREATE DATABASE study_room_booking;
+CREATE DATABASE IF NOT EXISTS study_room_booking;
 
 -- Select database
 USE study_room_booking;
@@ -21,8 +21,8 @@ CREATE TABLE rooms (
     capacity INT NOT NULL,
     is_overnight BOOLEAN NOT NULL DEFAULT FALSE,
     max_hours_allowed INT NOT NULL DEFAULT 4,
-    opening_time TIME NOT NULL,
-    closing_time TIME NOT NULL
+    opening_time INT NOT NULL DEFAULT 7,
+    closing_time INT NOT NULL DEFAULT 22
 );
 
 -- Seats Table
@@ -62,7 +62,7 @@ INSERT INTO rooms (room_name, capacity) VALUES
 ('Room 5', 9);
 
 -- Add some default values into seats
-INSERT INTO seats (room_id, seat_has_outlet_id) VALUES
+INSERT INTO seats (room_id, seat_has_outlet) VALUES
 (1, TRUE),
 (2, TRUE),
 (3, TRUE),

@@ -1,4 +1,4 @@
-const db = require('../services/database');
+const db = require('../database');
 
 class BookingModel {
     static async findAllRooms() {

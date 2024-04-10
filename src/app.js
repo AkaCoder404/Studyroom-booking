@@ -1,28 +1,36 @@
-//
+/**
+ * @fileoverview This is the entry point of the application.
+ * 
+ * 
+ */
+
 const express = require('express');
 const cookieParser = require("cookie-parser");
 const cors = require('cors');
 
+const config = require('./configs/index.config.js');
 const {
     accessLog,
     errorLog,
-    errorHandler,
-    verifyRoles,
+    // errorHandler,
+    // verifyRoles,
     authenticateUser,
-    rateLimiter,
-    compression
-} = require('./middleware/index.js');
+    // rateLimiter,
+    // compression
+} = require('./middleware.js');
 
 const app = express();
-const port = 8000;
+const port = config.port;
 
 app.use(express.json());
 app.use(cookieParser());
-app.use(cors({ origin: 'http://localhost:3000', credentials: true }));
+// app.use(cors({ origin: 'http://localhost:3001', credentials: true }));
+// app.use(cors({ origin: '*', credentials: true }));
+app.use(cors({ origin: "http://cloud.gutemorgan.com:3001", credentials: true }));
 app.use(accessLog);
 app.use(authenticateUser);
 
-const apiRoutes = require('./api/index.js');
+const apiRoutes = require('./routes/index.js');
 app.use('/api', apiRoutes);
 
 

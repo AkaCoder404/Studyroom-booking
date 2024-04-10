@@ -4,7 +4,7 @@ const dotenv = require('dotenv');
 dotenv.config();
 
 // Import Models
-const UserModel = require('../models/userModel');
+const UserModel = require('../models/users.model.js');
 
 const getUsers = async () => {
     // Get all users from the database
